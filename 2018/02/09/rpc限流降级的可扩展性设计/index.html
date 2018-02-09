@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="(未开始写，待续，等编完代码后开始写….)">
+<meta name="description" content="一、概念 服务熔断一般在客户端(调用端)做，是当某个异常条件被触发，直接熔断整个服务，而不是一直等到此服务超时。 熔断的触发条件可以依据不同的场景有所不同，比如统计一个时间窗口内失败的调用次数。  服务降级这个也是一般在客户端(调用端)做，有了熔断，就得有降级。所谓降级，就是当某个服务熔断之后，服务器将不再被调用，此时客户端可以自己准备一个本地的fallback回调，返回一个缺省值。 这样做，虽然">
 <meta name="keywords" content="rpc 限流 降级 架构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="rpc限流降级的可扩展性设计">
 <meta property="og:url" content="http://yoursite.com/2018/02/09/rpc限流降级的可扩展性设计/index.html">
 <meta property="og:site_name" content="sahajayogi2cn">
-<meta property="og:description" content="(未开始写，待续，等编完代码后开始写….)">
+<meta property="og:description" content="一、概念 服务熔断一般在客户端(调用端)做，是当某个异常条件被触发，直接熔断整个服务，而不是一直等到此服务超时。 熔断的触发条件可以依据不同的场景有所不同，比如统计一个时间窗口内失败的调用次数。  服务降级这个也是一般在客户端(调用端)做，有了熔断，就得有降级。所谓降级，就是当某个服务熔断之后，服务器将不再被调用，此时客户端可以自己准备一个本地的fallback回调，返回一个缺省值。 这样做，虽然">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-09T03:01:06.060Z">
+<meta property="og:updated_time" content="2018-02-09T08:16:02.785Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="rpc限流降级的可扩展性设计">
-<meta name="twitter:description" content="(未开始写，待续，等编完代码后开始写….)">
+<meta name="twitter:description" content="一、概念 服务熔断一般在客户端(调用端)做，是当某个异常条件被触发，直接熔断整个服务，而不是一直等到此服务超时。 熔断的触发条件可以依据不同的场景有所不同，比如统计一个时间窗口内失败的调用次数。  服务降级这个也是一般在客户端(调用端)做，有了熔断，就得有降级。所谓降级，就是当某个服务熔断之后，服务器将不再被调用，此时客户端可以自己准备一个本地的fallback回调，返回一个缺省值。 这样做，虽然">
 
 
 
@@ -300,7 +300,17 @@
       
 
       
-        <p>(未开始写，待续，等编完代码后开始写….)</p>
+        <h2 id="一、概念"><a href="#一、概念" class="headerlink" title="一、概念"></a>一、概念</h2><ol>
+<li><p><strong>服务熔断</strong><br>一般在客户端(调用端)做，是当某个异常条件被触发，直接熔断整个服务，而不是一直等到此服务超时。 熔断的触发条件可以依据不同的场景有所不同，比如统计一个时间窗口内失败的调用次数。</p>
+</li>
+<li><p><strong>服务降级</strong><br>这个也是一般在客户端(调用端)做，有了熔断，就得有降级。所谓降级，就是当某个服务熔断之后，服务器将不再被调用，此时客户端可以自己准备一个本地的fallback回调，返回一个缺省值。 这样做，虽然服务水平下降，但好歹可用，比直接挂掉要强，当然这也要看适合的业务场景。</p>
+</li>
+<li><p><strong>服务限流</strong><br>这个可以在客户端做，也可以在服务端做。可以针对整个服务集群，也可以针对单机。</p>
+<p> 这篇文章先值考虑服务限流的实现，服务熔断和降级后面有时间再写。</p>
+</li>
+</ol>
+<h2 id="二、实现"><a href="#二、实现" class="headerlink" title="二、实现"></a>二、实现</h2><p><strong>1. 服务限流</strong><br>有关服务限流，这篇文章已经讲的比较清楚了：<a href="http://manzhizhen.iteye.com/blog/2311691" target="_blank" rel="noopener">常用限流方案的设计和实现</a>, 包括如何实现：比如可以用guva的RateLimiter来实现限流。用该文介绍的方式是可以放到服务端或者客户端的。由于放到服务端是“流量已经进入后在服务端判断”的这么个缺点，所以我倾向于放在客户端。可用zookeeper来存储限制总流量n以及集群中服务的数量m，那么每台分配的流量就是 n/m。</p>
+<p><strong>2. 可扩展性设计与实现</strong><br>待续…..</p>
 
       
     </div>
@@ -391,8 +401,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -447,6 +466,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、概念"><span class="nav-number">1.</span> <span class="nav-text">一、概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、实现"><span class="nav-number">2.</span> <span class="nav-text">二、实现</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
