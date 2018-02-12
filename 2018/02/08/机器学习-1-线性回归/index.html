@@ -87,17 +87,17 @@
 <meta property="og:site_name" content="sahajayogi2cn">
 <meta property="og:description" content="这是我的第一篇博客！ 用于记录自己的成长过程，无论是内在的状态，还是技术的提升。 最近在学习吴恩达coursera的机器学习，真的非常感谢这位机器学习启蒙老师！ 这里复习的是线性回归,基本上用几张图可以完整表达，注意这里只是把最重要的部分列出来以便以后需要时查阅，并且添加一点视频里没有的证明,如果要搞懂每个细节，还是需要自己学习视频内容。首先我们定义出线性的hypothesis function">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/images/机器学习-1-线性回归/costFunGoal.png">
-<meta property="og:image" content="http://yoursite.com/images/机器学习-1-线性回归/costFunGoal_matrix.png">
-<meta property="og:image" content="http://yoursite.com/images/机器学习-1-线性回归/gradient_descent.png">
-<meta property="og:image" content="http://yoursite.com/images/机器学习-1-线性回归/gradient_descent_vect.png">
-<meta property="og:image" content="http://yoursite.com/images/机器学习-1-线性回归/NormalEquations.png">
-<meta property="og:image" content="http://yoursite.com/images/机器学习-1-线性回归/NormalEquations_derive.png">
-<meta property="og:updated_time" content="2018-02-09T01:55:49.905Z">
+<meta property="og:image" content="http://yoursite.com/2018/02/08/机器学习-1-线性回归/costFunGoal.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/08/机器学习-1-线性回归/costFunGoal_matrix.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/08/机器学习-1-线性回归/gradient_descent.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/08/机器学习-1-线性回归/gradient_descent_vect.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/08/机器学习-1-线性回归/NormalEquations.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/08/机器学习-1-线性回归/NormalEquations_derive.png">
+<meta property="og:updated_time" content="2018-02-12T01:57:46.543Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习-1-线性回归">
 <meta name="twitter:description" content="这是我的第一篇博客！ 用于记录自己的成长过程，无论是内在的状态，还是技术的提升。 最近在学习吴恩达coursera的机器学习，真的非常感谢这位机器学习启蒙老师！ 这里复习的是线性回归,基本上用几张图可以完整表达，注意这里只是把最重要的部分列出来以便以后需要时查阅，并且添加一点视频里没有的证明,如果要搞懂每个细节，还是需要自己学习视频内容。首先我们定义出线性的hypothesis function">
-<meta name="twitter:image" content="http://yoursite.com/images/机器学习-1-线性回归/costFunGoal.png">
+<meta name="twitter:image" content="http://yoursite.com/2018/02/08/机器学习-1-线性回归/costFunGoal.png">
 
 
 
@@ -309,16 +309,16 @@
       
         <p>这是我的第一篇博客！ 用于记录自己的成长过程，无论是内在的状态，还是技术的提升。</p>
 <p>最近在学习吴恩达coursera的机器学习，真的非常感谢这位机器学习启蒙老师！</p>
-<p>这里复习的是线性回归,基本上用几张图可以完整表达，注意这里只是把最重要的部分列出来以便以后需要时查阅，并且添加一点视频里没有的证明,如果要搞懂每个细节，还是需要自己学习视频内容。<br>首先我们定义出线性的hypothesis function h，然后定义出cost function J，为了使得假设函数接近或等于实际值，目标是使得函数J取最小值。<br><img src="/images/机器学习-1-线性回归/costFunGoal.png" alt="&quot;代价函数一般形式&quot;"> </p>
-<p>J(θ)函数实际上可以通过矩阵方式来操作：<br><img src="/images/机器学习-1-线性回归/costFunGoal_matrix.png" alt="&quot;代价函数通过矩阵操作&quot;"> </p>
+<p>这里复习的是线性回归,基本上用几张图可以完整表达，注意这里只是把最重要的部分列出来以便以后需要时查阅，并且添加一点视频里没有的证明,如果要搞懂每个细节，还是需要自己学习视频内容。<br>首先我们定义出线性的hypothesis function h，然后定义出cost function J，为了使得假设函数接近或等于实际值，目标是使得函数J取最小值。<br><img src="costFunGoal.png" alt="&quot;代价函数一般形式&quot;"> </p>
+<p>J(θ)函数实际上可以通过矩阵方式来操作：<br><img src="costFunGoal_matrix.png" alt="&quot;代价函数通过矩阵操作&quot;"> </p>
 <p>这个图片里的文字也说了，如果熟悉矩阵乘法，这个结论很容易的出来。对矩阵乘法了解有兴趣的朋友可以自己推导下。</p>
-<p>那么如何得到最有解？使用梯度下降法，即用每个θ的偏导数来更新θ,偏导数可理解为在一堆自变量中,针对的是某个变量求导数而其它变量可认为是常数，而这个J(θ)是二次函数是凸函数，故此有全局最优解。<br><img src="/images/机器学习-1-线性回归/gradient_descent.png" alt="&quot;梯度下降法一个样本点&quot;"></p>
-<p>这里给出的是每个θj(j为小下标，键盘不好打出来,j=0,1,2….)如何更新，实际上可以不使用循环操作，用如下向量化操作减少loop操作：<br><img src="/images/机器学习-1-线性回归/gradient_descent_vect.png" alt="&quot;梯度下降法向量化实现&quot;"></p>
+<p>那么如何得到最有解？使用梯度下降法，即用每个θ的偏导数来更新θ,偏导数可理解为在一堆自变量中,针对的是某个变量求导数而其它变量可认为是常数，而这个J(θ)是二次函数是凸函数，故此有全局最优解。<br><img src="gradient_descent.png" alt="&quot;梯度下降法一个样本点&quot;"></p>
+<p>这里给出的是每个θj(j为小下标，键盘不好打出来,j=0,1,2….)如何更新，实际上可以不使用循环操作，用如下向量化操作减少loop操作：<br><img src="gradient_descent_vect.png" alt="&quot;梯度下降法向量化实现&quot;"></p>
 <p>这张图左上角即没用向量化的实现，图的中部即是向量化的实现方法，而右上角解释了为什么可以用这种向量化方法来实现，如果熟悉矩阵乘法可以自己展开推导下。</p>
-<p>最后，就是如果样本量不大，比如不到几万的，可以用正规方程，直接求出参数θ：<br><img src="/images/机器学习-1-线性回归/NormalEquations.png" alt="&quot;正规方程&quot;"></p>
+<p>最后，就是如果样本量不大，比如不到几万的，可以用正规方程，直接求出参数θ：<br><img src="NormalEquations.png" alt="&quot;正规方程&quot;"></p>
 <p>下面是推导过程，相比于其他的推导，比如对矩阵求偏导、使用矩阵的迹来说，这种推导更容易理解，不过这种推导是在知道了正规方程是什么以后再推导的。不过对于我们理解已经足够了：</p>
 <p>若希望H(θ)=Y，则有</p>
-<p>　　X · θ = Y<br><img src="/images/机器学习-1-线性回归/NormalEquations_derive.png" alt="&quot;正规方程&quot;"></p>
+<p>　　X · θ = Y<br><img src="NormalEquations_derive.png" alt="&quot;正规方程&quot;"></p>
 <p>好了，线性回归部分已经复习完了，下面开始复习逻辑回归。</p>
 
       
@@ -430,7 +430,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -443,7 +443,7 @@
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>
