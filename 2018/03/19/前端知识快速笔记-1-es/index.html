@@ -88,7 +88,7 @@
 <meta property="og:description" content="ES,javascriptes7异步如下代码按照1,2,3的顺序执行，从这可以理解es7 async/await的执行顺序     var sleep = function (time) {     return new Promise(function (resolve, reject) {         setTimeout(function () {             // 返回 ‘">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/03/19/前端知识快速笔记-1-es/prototype1.jpg">
-<meta property="og:updated_time" content="2018-03-20T12:00:55.490Z">
+<meta property="og:updated_time" content="2018-03-20T12:08:11.914Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端知识快速笔记-1(es)">
 <meta name="twitter:description" content="ES,javascriptes7异步如下代码按照1,2,3的顺序执行，从这可以理解es7 async/await的执行顺序     var sleep = function (time) {     return new Promise(function (resolve, reject) {         setTimeout(function () {             // 返回 ‘">
@@ -407,6 +407,25 @@ function Person2(name, age) {
 }
 var p21 = new Person2(&quot;小龙&quot;, 40);
 p21.eat();  
+// 下面理解属性和方法在构造函数里会发生啥
+function Person3() {
+    this.name = &quot;李四&quot;;
+    this.age = 20;
+    this.eat1 = eat;
+    this.eat2 = function() {
+        alert(&quot;吃完东西2&quot;);
+    }
+}
+function eat() {
+    alert(&quot;吃完东西&quot;);
+}
+var p1 = new Person3();
+p1.name=&quot;王五&quot;;
+var p2 = new Person3();
+alert(p1.name); // ‘王五’
+alert(p2.name);   // &apos;李四&apos;
+alert(p1.eat1===p2.eat1);   //true
+alert(p1.eat2===p2.eat2);   //false
 </code></pre>
       
     </div>
