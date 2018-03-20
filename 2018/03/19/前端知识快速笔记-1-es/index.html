@@ -88,7 +88,7 @@
 <meta property="og:description" content="ES,javascriptes7异步如下代码按照1,2,3的顺序执行，从这可以理解es7 async/await的执行顺序     var sleep = function (time) {     return new Promise(function (resolve, reject) {         setTimeout(function () {             // 返回 ‘">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/03/19/前端知识快速笔记-1-es/prototype1.jpg">
-<meta property="og:updated_time" content="2018-03-20T08:27:21.243Z">
+<meta property="og:updated_time" content="2018-03-20T12:00:55.490Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端知识快速笔记-1(es)">
 <meta name="twitter:description" content="ES,javascriptes7异步如下代码按照1,2,3的顺序执行，从这可以理解es7 async/await的执行顺序     var sleep = function (time) {     return new Promise(function (resolve, reject) {         setTimeout(function () {             // 返回 ‘">
@@ -387,9 +387,27 @@ alert(&quot;sex属性是对象本身的：&quot; + p2.hasOwnProperty(&quot;sex&q
 alert(&quot;name属性是对象本身的：&quot; + p2.hasOwnProperty(&quot;name&quot;));
 alert(&quot;sex&quot; in p2);     // 对象本身添加的，所以true
 alert(&quot;name&quot; in p2);    //原型中存在，所以true
-alert(&quot;test1111&quot; in p2);     //对象和原型中都不存在，所以false
-</code></pre><p>asdf</p>
-
+alert(&quot;test1111&quot; in p2);     //对象和原型中都不存在，所以false  
+//动态模式创建方法,构造方法内部封装属性
+function Person2(name, age) {
+    //每个对象都添加自己的属性
+    this.name = name;
+    this.age = age;
+    /*
+        判断this.eat这个属性是不是function，如果不是function则证明是第一次创建对象，
+        则把这个funcion添加到原型中。
+        如果是function，则代表原型中已经有了这个方法，则不需要再添加。
+        perfect！完美解决了性能和代码的封装问题。
+    */
+    if(typeof this.eat !== &quot;function&quot;){
+        Person.prototype.eat = function () {
+            alert(this.name + &quot; 在吃&quot;);
+        }
+    }
+}
+var p21 = new Person2(&quot;小龙&quot;, 40);
+p21.eat();  
+</code></pre>
       
     </div>
     
@@ -523,7 +541,7 @@ alert(&quot;test1111&quot; in p2);     //对象和原型中都不存在，所以
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
