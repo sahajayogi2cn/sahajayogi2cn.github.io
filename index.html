@@ -642,10 +642,8 @@
       
         
           
-          ES,javascriptes7异步如下代码按照1,2,3的顺序执行，从这可以理解es7 async/await的执行顺序    
-var sleep = function (time) {
-    return new Promise(function (resolve, reject) {
-  
+          ES,javascriptes7异步如下代码按照如下顺序执行:立马弹出0, 2秒后弹出1,2, 然后2秒后3,4, 然后2秒后5,最后6从这可以理解es7 async/await结合promise的异步、同步执行顺序和方式    
+function syncSleep(numberMillis) {
           ...
           <!--noindex-->
           <div class="post-button text-center">

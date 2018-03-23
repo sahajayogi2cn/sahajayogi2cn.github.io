@@ -79,19 +79,19 @@
 
 
 
-<meta name="description" content="ES,javascriptes7异步如下代码按照1,2,3的顺序执行，从这可以理解es7 async/await的执行顺序     var sleep = function (time) {     return new Promise(function (resolve, reject) {         setTimeout(function () {             // 返回 ‘">
+<meta name="description" content="ES,javascriptes7异步如下代码按照如下顺序执行:立马弹出0, 2秒后弹出1,2, 然后2秒后3,4, 然后2秒后5,最后6从这可以理解es7 async/await结合promise的异步、同步执行顺序和方式     function syncSleep(numberMillis) {    var now = new Date();    var exitTime = now.ge">
 <meta name="keywords" content="前端 es">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端知识快速笔记-1(es)">
 <meta property="og:url" content="http://yoursite.com/2018/03/19/前端知识快速笔记-1-es/index.html">
 <meta property="og:site_name" content="sahajayogi2cn">
-<meta property="og:description" content="ES,javascriptes7异步如下代码按照1,2,3的顺序执行，从这可以理解es7 async/await的执行顺序     var sleep = function (time) {     return new Promise(function (resolve, reject) {         setTimeout(function () {             // 返回 ‘">
+<meta property="og:description" content="ES,javascriptes7异步如下代码按照如下顺序执行:立马弹出0, 2秒后弹出1,2, 然后2秒后3,4, 然后2秒后5,最后6从这可以理解es7 async/await结合promise的异步、同步执行顺序和方式     function syncSleep(numberMillis) {    var now = new Date();    var exitTime = now.ge">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/03/19/前端知识快速笔记-1-es/prototype1.jpg">
-<meta property="og:updated_time" content="2018-03-20T12:08:11.914Z">
+<meta property="og:updated_time" content="2018-03-23T07:06:38.838Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端知识快速笔记-1(es)">
-<meta name="twitter:description" content="ES,javascriptes7异步如下代码按照1,2,3的顺序执行，从这可以理解es7 async/await的执行顺序     var sleep = function (time) {     return new Promise(function (resolve, reject) {         setTimeout(function () {             // 返回 ‘">
+<meta name="twitter:description" content="ES,javascriptes7异步如下代码按照如下顺序执行:立马弹出0, 2秒后弹出1,2, 然后2秒后3,4, 然后2秒后5,最后6从这可以理解es7 async/await结合promise的异步、同步执行顺序和方式     function syncSleep(numberMillis) {    var now = new Date();    var exitTime = now.ge">
 <meta name="twitter:image" content="http://yoursite.com/2018/03/19/前端知识快速笔记-1-es/prototype1.jpg">
 
 
@@ -344,21 +344,36 @@
       
 
       
-        <h2 id="ES-javascript"><a href="#ES-javascript" class="headerlink" title="ES,javascript"></a>ES,javascript</h2><p><strong>es7异步</strong><br>如下代码按照1,2,3的顺序执行，从这可以理解es7 async/await的执行顺序    </p>
-<pre><code>var sleep = function (time) {
+        <h2 id="ES-javascript"><a href="#ES-javascript" class="headerlink" title="ES,javascript"></a>ES,javascript</h2><p><strong>es7异步</strong><br>如下代码按照如下顺序执行:<br>立马弹出0, 2秒后弹出1,2, 然后2秒后3,4, 然后2秒后5,最后6<br>从这可以理解es7 async/await结合promise的异步、同步执行顺序和方式    </p>
+<pre><code>function syncSleep(numberMillis) { 
+  var now = new Date(); 
+  var exitTime = now.getTime() + numberMillis; 
+  while (true) { 
+    now = new Date(); 
+    if (now.getTime() &gt; exitTime) 
+    return; 
+    } 
+}
+var sleep = function (time) {
     return new Promise(function (resolve, reject) {
         setTimeout(function () {
             // 返回 ‘ok’
             resolve(&apos;ok&apos;);
         }, time);
     })
-};
+}
 var start = async function () {
-    alert(&apos;1.开始执行&apos;);
-    let result = await sleep(3000);
-    alert(&apos;3.收到&apos;+result); // 收到 ‘ok’
-};
-start();
+    syncSleep(2000);
+    alert(&apos;1. 开始!&apos;);
+    let r1 = await sleep(2000);
+    alert(&apos;3.收到&apos;+r1); // 收到 ‘ok’
+    alert(&apos;4.开始执行&apos;);
+    let result = await sleep(2000);
+    alert(&apos;5.收到&apos;+result); // 收到 ‘ok’
+    return result+&apos;哈哈&apos;;
+}
+alert(&apos;0. 接下来要睡2秒了&apos;);
+start().then(data=&gt;alert(&apos;6.看看是啥:&apos;+data));
 alert(&apos;2. 结束执行&apos;);  
 </code></pre><p><strong>prototype</strong><br>如下图片说明说明了prototype和函数的关系，代码后面附上,基本包含了prototype的各种情况<br><img src="prototype1.jpg" alt="&quot;prototype和函数的关系&quot;">  </p>
 <pre><code>function Person () {        
