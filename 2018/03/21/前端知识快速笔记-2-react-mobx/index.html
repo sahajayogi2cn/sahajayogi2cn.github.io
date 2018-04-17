@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="sahajayogi2cn">
 <meta property="og:description" content="MOBXreact-native mobx搭建(在现有项目里增加)1.. 修改.babelrc形如   {  &amp;apos;presets&amp;apos;: [&amp;apos;react-native&amp;apos;],  &amp;apos;plugins&amp;apos;: [&amp;apos;transform-decorators-legacy&amp;apos;] } 2.. package.json的dependencies加">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-22T05:59:26.785Z">
+<meta property="og:updated_time" content="2018-04-17T06:18:44.324Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端知识快速笔记-2-react_mobx">
 <meta name="twitter:description" content="MOBXreact-native mobx搭建(在现有项目里增加)1.. 修改.babelrc形如   {  &amp;apos;presets&amp;apos;: [&amp;apos;react-native&amp;apos;],  &amp;apos;plugins&amp;apos;: [&amp;apos;transform-decorators-legacy&amp;apos;] } 2.. package.json的dependencies加">
@@ -358,8 +358,16 @@
         &quot;experimentalDecorators&quot;: true
     }
 }
-</code></pre><p>4.. npm install，大功告成，还可以使用装饰器啦</p>
-
+</code></pre><p>4.. npm install，大功告成，还可以使用装饰器啦  </p>
+<h2 id="react-native热更新"><a href="#react-native热更新" class="headerlink" title="react native热更新"></a>react native热更新</h2><p>1.. 执行： (如果使用了enumify)  </p>
+<pre><code>npm install babel-preset-es2015 --save
+npm install babel-preset-react --save
+yarn
+</code></pre><p>2.. 打包  </p>
+<pre><code>react-native bundle --entry-file index.android.js --bundle-output ./bundle/index.android.bundle --platform android --assets-dest ./bundle --dev false  
+</code></pre><h2 id="react-native-命令一览"><a href="#react-native-命令一览" class="headerlink" title="react native 命令一览"></a>react native 命令一览</h2><p>1.. vscode里过滤android的log的tag  </p>
+<pre><code>adb logcat -s &quot;cjx111&quot;
+</code></pre>
       
     </div>
     
@@ -398,6 +406,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/17/机器学习-3-神经网络/" rel="prev" title="机器学习-3-神经网络">
+                机器学习-3-神经网络 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -478,7 +490,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -500,7 +512,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -533,7 +545,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MOBX"><span class="nav-number">1.</span> <span class="nav-text">MOBX</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MOBX"><span class="nav-number">1.</span> <span class="nav-text">MOBX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#react-native热更新"><span class="nav-number">2.</span> <span class="nav-text">react native热更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#react-native-命令一览"><span class="nav-number">3.</span> <span class="nav-text">react native 命令一览</span></a></li></ol></div>
             
 
           </div>
