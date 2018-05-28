@@ -88,15 +88,15 @@
 <meta property="og:description" content="下面来总结下神经网络,是可以模拟任何函数的，具体原理可搜索”神经网络 任意函数”，这个和AND、OR等逻辑操作可以结合在一起思考，具体原理需要进一步学习研究呀!   那么如何训练数据呢，分如下几个步骤    随机初始化权重   实现前向网络 ,为每个样本 获得 h(Θ) 实现计算代价函数的代码 J(Θ) 对样本进行循环，对每个样本实现bp算法求偏导 使用梯度检验 使用梯度下降或者高级优化算法，得到">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/04/17/机器学习-3-神经网络/fp.png">
-<meta property="og:image" content="http://yoursite.com/2018/04/17/机器学习-3-神经网络/fp.png">
-<meta property="og:image" content="http://yoursite.com/2018/04/17/机器学习-3-神经网络/fp.png">
-<meta property="og:image" content="http://yoursite.com/2018/04/17/机器学习-3-神经网络/fp.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/17/机器学习-3-神经网络/networkpng.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/17/机器学习-3-神经网络/networkpng_output.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/17/机器学习-3-神经网络/cost.png">
 <meta property="og:image" content="http://yoursite.com/2018/04/17/机器学习-3-神经网络/bp1.png">
 <meta property="og:image" content="http://yoursite.com/2018/04/17/机器学习-3-神经网络/bp2.png">
 <meta property="og:image" content="http://yoursite.com/2018/04/17/机器学习-3-神经网络/reshape.png">
 <meta property="og:image" content="http://yoursite.com/2018/04/17/机器学习-3-神经网络/check.png">
 <meta property="og:image" content="http://yoursite.com/2018/04/17/机器学习-3-神经网络/check_gongshi.png">
-<meta property="og:updated_time" content="2018-05-28T11:30:47.838Z">
+<meta property="og:updated_time" content="2018-05-28T11:32:41.728Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习-3-神经网络">
 <meta name="twitter:description" content="下面来总结下神经网络,是可以模拟任何函数的，具体原理可搜索”神经网络 任意函数”，这个和AND、OR等逻辑操作可以结合在一起思考，具体原理需要进一步学习研究呀!   那么如何训练数据呢，分如下几个步骤    随机初始化权重   实现前向网络 ,为每个样本 获得 h(Θ) 实现计算代价函数的代码 J(Θ) 对样本进行循环，对每个样本实现bp算法求偏导 使用梯度检验 使用梯度下降或者高级优化算法，得到">
@@ -364,9 +364,9 @@
 </ol>
 <p>先看第1步：<br>这步是为了打破对称(Symmetry breaking),  假如有2个隐藏层1个输出层，INIT_EPSILON取值为0到1，那么初始化代码如下<br>Theta1 = rand(10,11) <em> (2 </em> INIT_EPSILON) - INIT_EPSILON;<br>Theta2 = rand(10,11) <em> (2 </em> INIT_EPSILON) - INIT_EPSILON;<br>Theta3 = rand(1,11) <em> (2 </em> INIT_EPSILON) - INIT_EPSILON;  </p>
 <p>第2步：<br>比如如下的神经网络，那么前向网络是这样计算的：<br><img src="fp.png" alt="&quot;fp算法&quot;">. </p>
-<p>第3步：<br>比如这样一个神经网络，是个多分类问题：<br><img src="fp.png" alt="&quot;networkpng&quot;">.   </p>
-<p>输出层是这样的：<br><img src="fp.png" alt="&quot;networkpng_output&quot;">.   </p>
-<p>代价函数如下所示：<br><img src="fp.png" alt="&quot;cost&quot;">.   </p>
+<p>第3步：<br>比如这样一个神经网络，是个多分类问题：<br><img src="networkpng.png" alt="&quot;networkpng&quot;">.   </p>
+<p>输出层是这样的：<br><img src="networkpng_output.png" alt="&quot;networkpng_output&quot;">.   </p>
+<p>代价函数如下所示：<br><img src="cost.png" alt="&quot;cost&quot;">.   </p>
 <p>第4步：<br>具体看这篇文章讲解了推导过程： <a href="https://www.cnblogs.com/andywenzhi/p/7295262.html?utm_source=itdadao&amp;utm_medium=referral" target="_blank" rel="noopener">Backpropagation 算法的推导与直观图解</a>  </p>
 <p>这里andrew对bp有个总结，如下图所示:<br><img src="bp1.png" alt="&quot;bp1&quot;">.<br><img src="bp2.png" alt="&quot;bp2&quot;">. </p>
 <p>注意这里还有个技巧，在初始化Θ时，对于高级优化函数，需要展开(unroll)，在函数里用reshape来重塑成矩阵，如下图所示：<br><img src="reshape.png" alt="&quot;reshape&quot;">. </p>
