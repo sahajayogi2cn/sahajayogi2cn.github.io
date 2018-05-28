@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="HEXO// 调试hexo s debug// 新posthexo new post “xxxx”// 先清后部署hexo cleanhexo g -d">
+<meta name="description" content="HEXO// 调试hexo s debug// 新posthexo new post “xxxx”// 先清后部署hexo cleanhexo g -d   LINUX// 查看进程启动时间，如下的29612为进程号ps -p 29612 -o lstart// 搜索gzgzip -dc myfile.gz | grep abc// 解压到指定目录tar   zxvf    test.tgz  -">
 <meta name="keywords" content="命令行">
 <meta property="og:type" content="article">
 <meta property="og:title" content="命令行笔记">
 <meta property="og:url" content="http://yoursite.com/2018/03/20/命令行笔记/index.html">
 <meta property="og:site_name" content="sahajayogi2cn">
-<meta property="og:description" content="HEXO// 调试hexo s debug// 新posthexo new post “xxxx”// 先清后部署hexo cleanhexo g -d">
+<meta property="og:description" content="HEXO// 调试hexo s debug// 新posthexo new post “xxxx”// 先清后部署hexo cleanhexo g -d   LINUX// 查看进程启动时间，如下的29612为进程号ps -p 29612 -o lstart// 搜索gzgzip -dc myfile.gz | grep abc// 解压到指定目录tar   zxvf    test.tgz  -">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-21T06:22:39.699Z">
+<meta property="og:updated_time" content="2018-05-17T09:38:07.122Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="命令行笔记">
-<meta name="twitter:description" content="HEXO// 调试hexo s debug// 新posthexo new post “xxxx”// 先清后部署hexo cleanhexo g -d">
+<meta name="twitter:description" content="HEXO// 调试hexo s debug// 新posthexo new post “xxxx”// 先清后部署hexo cleanhexo g -d   LINUX// 查看进程启动时间，如下的29612为进程号ps -p 29612 -o lstart// 搜索gzgzip -dc myfile.gz | grep abc// 解压到指定目录tar   zxvf    test.tgz  -">
 
 
 
@@ -342,7 +342,17 @@
       
 
       
-        <h2 id="HEXO"><a href="#HEXO" class="headerlink" title="HEXO"></a>HEXO</h2><p>// 调试<br>hexo s debug<br>// 新post<br>hexo new post “xxxx”<br>// 先清后部署<br>hexo clean<br>hexo g -d</p>
+        <h2 id="HEXO"><a href="#HEXO" class="headerlink" title="HEXO"></a>HEXO</h2><p>// 调试<br>hexo s debug<br>// 新post<br>hexo new post “xxxx”<br>// 先清后部署<br>hexo clean<br>hexo g -d  </p>
+<h2 id="LINUX"><a href="#LINUX" class="headerlink" title="LINUX"></a>LINUX</h2><p>// 查看进程启动时间，如下的29612为进程号<br>ps -p 29612 -o lstart<br>// 搜索gz<br>gzip -dc myfile.gz | grep abc<br>// 解压到指定目录<br>tar   zxvf    test.tgz  -C  指定目录</p>
+<h2 id="REDIS"><a href="#REDIS" class="headerlink" title="REDIS"></a>REDIS</h2><p>// 线上一个redis服务，近来会出现内存爆表的现象——超过了设置的最大可用内存，结果导致写入失败。而这个最大可用内存，绝大多数情况是够的。所以研究了下如何查看redis中Object的内存使用情况。总结步骤如下：<br>(1)、用keys * 打印出所有key：  </p>
+<pre><code>echo -e &quot;KEYS *\n&quot; | redis-cli -p 6379 &gt; keys.redis  
+</code></pre><p>(2)、用debug object命令，打印信息，其中的serializedlength就是object的大小  </p>
+<pre><code>for key in `cat keys.redis` ; do info=`echo -e &quot;debug object $key&quot; | redis-cli -p 6379 | grep -Po &quot;serializedlength\:[0-9]*&quot; | cut -d &quot;:&quot; -f2 | tr -d &apos;\n&apos;`; echo $key&quot;: &quot;$info  &gt;&gt; keysize.redis; done;  
+</code></pre><p>(3)、对生成结果进行排序，查看内存使用大的key（这边列出前面100个）：  </p>
+<pre><code>cat keysize.redis | sort -nr -k 2 | head -n 100  
+</code></pre><p>// 测试开发环境redis重启命令:<br>redis-server /data/redis/config/6380.conf &gt; /data/redis/log/redis-6380.log 2&gt;&amp;1 &amp;<br>redis-server /data/redis/config/6381.conf &gt; /data/redis/log/redis-6381.log 2&gt;&amp;1 &amp;<br>redis-server /data/redis/config/6382.conf &gt; /data/redis/log/redis-6382.log 2&gt;&amp;1 &amp;<br>redis-server /data/redis/config/6383.conf &gt; /data/redis/log/redis-6383.log 2&gt;&amp;1 &amp;<br>redis-server /data/redis/config/6384.conf &gt; /data/redis/log/redis-6384.log 2&gt;&amp;1 &amp;<br>redis-server /data/redis/config/6385.conf &gt; /data/redis/log/redis-6385.log 2&gt;&amp;1 &amp;  </p>
+<p>// redis集群命令：<br>redis-cli -c -p 6380  </p>
+<h2 id="ELK"><a href="#ELK" class="headerlink" title="ELK"></a>ELK</h2><p>// kibana启动<br>nohup bin/kibana &gt; /dev/null 2&gt;&amp;1 &amp;<br>// logstash启动</p>
 
       
     </div>
@@ -521,7 +531,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HEXO"><span class="nav-number">1.</span> <span class="nav-text">HEXO</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HEXO"><span class="nav-number">1.</span> <span class="nav-text">HEXO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LINUX"><span class="nav-number">2.</span> <span class="nav-text">LINUX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REDIS"><span class="nav-number">3.</span> <span class="nav-text">REDIS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ELK"><span class="nav-number">4.</span> <span class="nav-text">ELK</span></a></li></ol></div>
             
 
           </div>
