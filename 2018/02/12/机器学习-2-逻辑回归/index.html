@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://yoursite.com/2018/02/12/机器学习-2-逻辑回归/regul_normal.png">
 <meta property="og:image" content="http://yoursite.com/2018/02/12/机器学习-2-逻辑回归/overfit_lg_regul.png">
 <meta property="og:image" content="http://yoursite.com/2018/02/12/机器学习-2-逻辑回归/logstic_regual_grades.png">
-<meta property="og:updated_time" content="2018-05-29T06:47:24.207Z">
+<meta property="og:updated_time" content="2018-05-29T06:52:40.716Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习-2-逻辑回归">
 <meta name="twitter:description" content="下面来总结下逻辑回归,基本上用几张图也可以完整表达，注意这里只是把最重要的部分列出来以便以后需要时查阅，并且添加视频里没有的证明,如果要搞懂每个细节，还是需要自己学习视频内容。注意，logistic regression是用于分类的，并不是用于回归的，这种叫法只是历史原因造成。 首先我们知道逻辑回归使用了sigmoid函数,这个在深度神经网络也是一种激活函数。那么为什么要使用s函数呢？实际上是指数">
@@ -362,11 +362,11 @@
 <p>和线性回归一样，对这个式子运用梯度下降法也是对每个θ参数求偏导，可以自己推导下，和线性回归的每个θ的求导式子很类似，只是里面的h(x)不一样而已<br><img src="grades.png" alt="&quot;梯度下降求θ&quot;">  </p>
 <p>下面看看逻辑回归高级优化算法，有Gradient descent、Conjugate gradient、BFGS、L-BFGS等，比如octave里的，只要提供代价函数jval和梯度下降的每个θ的导数,那么使用 fminunc(@costFunction,initialTheta,options)就可以求出θ，这个算法包自动回选择学习率等参数。</p>
 <p>那么如何使用逻辑回归实现多分类呢，多分类实际one-vs-rest方法，每次分为:某个分类和其他的所有分类分成两类，来训练h(x)，而对于要预测的x，求所有h(x)的最大值即可。</p>
-<p>如果出现过拟合可以用一种方法：正规化使得θ尽量小，从而使得曲线更光滑，但注意λ过大的话会造成欠拟合。如下是线性回归的正规化后的代价函数：<br><img src="overfit_regul.png" alt="&quot;增对过拟合的正规化&quot;">  </p>
-<p>线性回归正规化后的梯度下降如下：(注意θ0区别对待)<br><img src="regul_liner.png" alt="&quot;线性回归正规化后的梯度下降&quot;">  </p>
-<p>正规化后的求θ的正规方程如下：  (注意加了这个后面的就成为可逆的了,为啥呢没时间深入找文章研究呢)<br><img src="regul_normal.png" alt="&quot;正规化后的求θ的正规方程&quot;">  </p>
-<p>如下是逻辑回归正规化后的代价函数：<br><img src="overfit_lg_regul.png" alt="&quot;逻辑回归过拟合的正规化&quot;">  </p>
-<p>逻辑回归用正规化实现的梯度下降如下：<br><img src="logstic_regual_grades.png" alt="&quot;逻辑回归用正规化实现的梯度下降&quot;">  </p>
+<p>如果出现过拟合可以用一种方法：正则化使得θ尽量小，从而使得曲线更光滑，但注意λ过大的话会造成欠拟合。如下是线性回归的正则化后的代价函数：<br><img src="overfit_regul.png" alt="&quot;增对过拟合的正则化&quot;">  </p>
+<p>线性回归正则化后的梯度下降如下：(注意θ0区别对待)<br><img src="regul_liner.png" alt="&quot;线性回归正则化后的梯度下降&quot;">  </p>
+<p>正则化后的求θ的正规方程如下：  (注意加了这个后面的就成为可逆的了,为啥呢没时间深入找文章研究呢)<br><img src="regul_normal.png" alt="&quot;正则化后的求θ的正规方程&quot;">  </p>
+<p>如下是逻辑回归正则化后的代价函数：<br><img src="overfit_lg_regul.png" alt="&quot;逻辑回归过拟合的正则化&quot;">  </p>
+<p>逻辑回归用正则化实现的梯度下降如下：<br><img src="logstic_regual_grades.png" alt="&quot;逻辑回归用正则化实现的梯度下降&quot;">  </p>
 <p>当然，这个也可以使用高级优化算法计算θ</p>
 
       
