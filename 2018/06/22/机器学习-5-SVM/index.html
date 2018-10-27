@@ -79,18 +79,29 @@
 
 
 
-<meta name="description" content="支持向量机参考资料SVM-支持向量机算法概述支持向量机通俗导论（理解SVM的三层境界）">
+<meta name="description" content="支持向量机参考资料SVM-支持向量机算法概述支持向量机通俗导论（理解SVM的三层境界）简易解说拉格朗日对偶(Lagrange duality)NG讲解和传统讲解SVM对比     　逻辑回归和SVM异同要想深入理解SVM，上述参考资料是必须要看的，尤其是“对比”，可以理解NG和其他老师，比如西瓜书、李航等所讲解的不同(Ng老师讲解的没有VC维，没有结构风险概念，没有SMO算法，没有KKT条件，没">
 <meta name="keywords" content="机器学习 SVM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习-5-SVM">
 <meta property="og:url" content="http://yoursite.com/2018/06/22/机器学习-5-SVM/index.html">
 <meta property="og:site_name" content="sahajayogi2cn">
-<meta property="og:description" content="支持向量机参考资料SVM-支持向量机算法概述支持向量机通俗导论（理解SVM的三层境界）">
+<meta property="og:description" content="支持向量机参考资料SVM-支持向量机算法概述支持向量机通俗导论（理解SVM的三层境界）简易解说拉格朗日对偶(Lagrange duality)NG讲解和传统讲解SVM对比     　逻辑回归和SVM异同要想深入理解SVM，上述参考资料是必须要看的，尤其是“对比”，可以理解NG和其他老师，比如西瓜书、李航等所讲解的不同(Ng老师讲解的没有VC维，没有结构风险概念，没有SMO算法，没有KKT条件，没">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-22T08:22:35.072Z">
+<meta property="og:image" content="http://yoursite.com/2018/06/22/机器学习-5-SVM/y为1时.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/22/机器学习-5-SVM/y为0时.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/22/机器学习-5-SVM/逻辑回归优化目标函数.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/22/机器学习-5-SVM/svm优化目标函数.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/22/机器学习-5-SVM/最大间隔数学直觉.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/22/机器学习-5-SVM/相似度函数.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/22/机器学习-5-SVM/svn_kernels算法1.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/22/机器学习-5-SVM/svn_kernels算法1.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/22/机器学习-5-SVM/svm参数调整.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/22/机器学习-5-SVM/svm_vs_lr.png">
+<meta property="og:updated_time" content="2018-10-27T05:00:57.120Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习-5-SVM">
-<meta name="twitter:description" content="支持向量机参考资料SVM-支持向量机算法概述支持向量机通俗导论（理解SVM的三层境界）">
+<meta name="twitter:description" content="支持向量机参考资料SVM-支持向量机算法概述支持向量机通俗导论（理解SVM的三层境界）简易解说拉格朗日对偶(Lagrange duality)NG讲解和传统讲解SVM对比     　逻辑回归和SVM异同要想深入理解SVM，上述参考资料是必须要看的，尤其是“对比”，可以理解NG和其他老师，比如西瓜书、李航等所讲解的不同(Ng老师讲解的没有VC维，没有结构风险概念，没有SMO算法，没有KKT条件，没">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/22/机器学习-5-SVM/y为1时.png">
 
 
 
@@ -343,8 +354,18 @@
 
       
         <ol>
-<li>支持向量机参考资料<br><a href="https://blog.csdn.net/passball/article/details/7661887" target="_blank" rel="noopener">SVM-支持向量机算法概述</a><br><a href="https://blog.csdn.net/v_july_v/article/details/7624837" target="_blank" rel="noopener">支持向量机通俗导论（理解SVM的三层境界）</a>  </li>
+<li><p>支持向量机参考资料<br><a href="https://blog.csdn.net/passball/article/details/7661887" target="_blank" rel="noopener">SVM-支持向量机算法概述</a><br><a href="https://blog.csdn.net/v_july_v/article/details/7624837" target="_blank" rel="noopener">支持向量机通俗导论（理解SVM的三层境界）</a><br><a href="https://www.cnblogs.com/90zeng/p/Lagrange_duality.html" target="_blank" rel="noopener">简易解说拉格朗日对偶(Lagrange duality)</a><br><a href="https://blog.csdn.net/walilk/article/details/53542645?utm_source=blogxgwz5" target="_blank" rel="noopener">NG讲解和传统讲解SVM对比</a>   </p>
+</li>
+<li><p>　逻辑回归和SVM异同<br>要想深入理解SVM，上述参考资料是必须要看的，尤其是“对比”，可以理解NG和其他老师，比如西瓜书、李航等所讲解的不同(Ng老师讲解的没有VC维，没有结构风险概念，没有SMO算法，没有KKT条件，没有拉格朗日)。这里只是总结下Ng在cousera中的讲解<br>1）如果 y=1，令z=&lt;θ, x&gt;，则和逻辑回归相比代价函数随z的变化曲线如下图：<br><img src="y为1时.png" alt="&quot;y为1时&quot;">.<br>2）如果y=0，令z=&lt;θ, x&gt;，则和逻辑回归相比代价函数随z的变化曲线如下图：<br><img src="y为0时.png" alt="&quot;y为0时&quot;">.   </p>
+</li>
+<li><p>目标函数和数学直觉<br>逻辑回归优化目标函数如下<br><img src="逻辑回归优化目标函数.png" alt="&quot;逻辑回归优化目标函数&quot;">.<br>svm优化目标函数如下<br><img src="svm优化目标函数.png" alt="&quot;svm优化目标函数&quot;">.<br>Ng给出为什么会得到最大间隔的数学直觉如下:<br><img src="最大间隔数学直觉.png" alt="&quot;最大间隔数学直觉&quot;">.   </p>
+</li>
+<li><p>高斯核函数<br>相似度函数如下：<br><img src="相似度函数.png" alt="&quot;相似度函数&quot;">.<br>算法步骤如下：<br><img src="svn_kernels算法1.png" alt="&quot;svn_kernels算法1&quot;">.<br><img src="svn_kernels算法1.png" alt="&quot;svn_kernels算法1&quot;">.<br>SVM参数和偏差、方差的关系如下：<br><img src="svm参数调整.png" alt="&quot;svm参数调整&quot;">.    </p>
+</li>
+<li><p>如何选择使用lr还是svm<br><img src="svm_vs_lr.png" alt="&quot;参考建议&quot;">.       </p>
+</li>
 </ol>
+<p>&lt;完&gt;</p>
 
       
     </div>

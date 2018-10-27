@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="这是我的第一篇博客！ 用于记录自己的成长过程，无论是内在的状态，还是技术的提升。 最近在学习吴恩达coursera的机器学习，真的非常感谢这位机器学习启蒙老师！ 这里复习的是线性回归,基本上用几张图可以完整表达，注意这里只是把最重要的部分列出来以便以后需要时查阅，并且添加一点视频里没有的证明,如果要搞懂每个细节，还是需要自己学习视频内容。首先我们定义出线性的hypothesis function">
+<meta name="description" content="这是我的第一篇博客！ 用于记录自己的成长过程，无论是内在的状态还是技术方面的。 最近在学习吴恩达coursera的机器学习，真的非常感谢这位机器学习启蒙老师！ 这只是俺的笔记方便以后自己查阅。首先看看这个文章对机器学习有个初步印象：三张图读懂机器学习：基本概念、五大流派与九种常见算法首先我们定义出线性的hypothesis function h，然后定义出cost function J，为了使得假">
 <meta name="keywords" content="机器学习 线性回归">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习-1-线性回归">
 <meta property="og:url" content="http://yoursite.com/2018/02/08/机器学习-1-线性回归/index.html">
 <meta property="og:site_name" content="sahajayogi2cn">
-<meta property="og:description" content="这是我的第一篇博客！ 用于记录自己的成长过程，无论是内在的状态，还是技术的提升。 最近在学习吴恩达coursera的机器学习，真的非常感谢这位机器学习启蒙老师！ 这里复习的是线性回归,基本上用几张图可以完整表达，注意这里只是把最重要的部分列出来以便以后需要时查阅，并且添加一点视频里没有的证明,如果要搞懂每个细节，还是需要自己学习视频内容。首先我们定义出线性的hypothesis function">
+<meta property="og:description" content="这是我的第一篇博客！ 用于记录自己的成长过程，无论是内在的状态还是技术方面的。 最近在学习吴恩达coursera的机器学习，真的非常感谢这位机器学习启蒙老师！ 这只是俺的笔记方便以后自己查阅。首先看看这个文章对机器学习有个初步印象：三张图读懂机器学习：基本概念、五大流派与九种常见算法首先我们定义出线性的hypothesis function h，然后定义出cost function J，为了使得假">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/02/08/机器学习-1-线性回归/costFunGoal.png">
 <meta property="og:image" content="http://yoursite.com/2018/02/08/机器学习-1-线性回归/costFunGoal_matrix.png">
@@ -93,10 +93,10 @@
 <meta property="og:image" content="http://yoursite.com/2018/02/08/机器学习-1-线性回归/gradient_descent_vect.png">
 <meta property="og:image" content="http://yoursite.com/2018/02/08/机器学习-1-线性回归/NormalEquations.png">
 <meta property="og:image" content="http://yoursite.com/2018/02/08/机器学习-1-线性回归/NormalEquations_derive.png">
-<meta property="og:updated_time" content="2018-06-07T05:46:58.860Z">
+<meta property="og:updated_time" content="2018-06-26T02:46:39.617Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习-1-线性回归">
-<meta name="twitter:description" content="这是我的第一篇博客！ 用于记录自己的成长过程，无论是内在的状态，还是技术的提升。 最近在学习吴恩达coursera的机器学习，真的非常感谢这位机器学习启蒙老师！ 这里复习的是线性回归,基本上用几张图可以完整表达，注意这里只是把最重要的部分列出来以便以后需要时查阅，并且添加一点视频里没有的证明,如果要搞懂每个细节，还是需要自己学习视频内容。首先我们定义出线性的hypothesis function">
+<meta name="twitter:description" content="这是我的第一篇博客！ 用于记录自己的成长过程，无论是内在的状态还是技术方面的。 最近在学习吴恩达coursera的机器学习，真的非常感谢这位机器学习启蒙老师！ 这只是俺的笔记方便以后自己查阅。首先看看这个文章对机器学习有个初步印象：三张图读懂机器学习：基本概念、五大流派与九种常见算法首先我们定义出线性的hypothesis function h，然后定义出cost function J，为了使得假">
 <meta name="twitter:image" content="http://yoursite.com/2018/02/08/机器学习-1-线性回归/costFunGoal.png">
 
 
@@ -349,9 +349,9 @@
       
 
       
-        <p>这是我的第一篇博客！ 用于记录自己的成长过程，无论是内在的状态，还是技术的提升。</p>
+        <p>这是我的第一篇博客！ 用于记录自己的成长过程，无论是内在的状态还是技术方面的。</p>
 <p>最近在学习吴恩达coursera的机器学习，真的非常感谢这位机器学习启蒙老师！</p>
-<p>这里复习的是线性回归,基本上用几张图可以完整表达，注意这里只是把最重要的部分列出来以便以后需要时查阅，并且添加一点视频里没有的证明,如果要搞懂每个细节，还是需要自己学习视频内容。<br>首先我们定义出线性的hypothesis function h，然后定义出cost function J，为了使得假设函数接近或等于实际值，目标是使得函数J取最小值。<br><img src="costFunGoal.png" alt="&quot;代价函数一般形式&quot;"> </p>
+<p>这只是俺的笔记方便以后自己查阅。首先看看这个文章对机器学习有个初步印象：<a href="http://www.cyzone.cn/a/20170422/310196.html" target="_blank" rel="noopener">三张图读懂机器学习：基本概念、五大流派与九种常见算法</a><br>首先我们定义出线性的hypothesis function h，然后定义出cost function J，为了使得假设函数接近或等于实际值，目标是使得函数J取最小值。<br><img src="costFunGoal.png" alt="&quot;代价函数一般形式&quot;"> </p>
 <p>J(θ)函数实际上可以通过矩阵方式来操作：<br><img src="costFunGoal_matrix.png" alt="&quot;代价函数通过矩阵操作&quot;"> </p>
 <p>这个图片里的文字也说了，如果熟悉矩阵乘法，这个结论很容易的出来。对矩阵乘法了解有兴趣的朋友可以自己推导下。</p>
 <p>那么如何得到最有解？使用梯度下降法，即用每个θ的偏导数来更新θ,偏导数可理解为在一堆自变量中,针对的是某个变量求导数而其它变量可认为是常数，而这个J(θ)二阶导函数大于0是凸函数(可证明出来)，故此有全局最优解。<br><img src="gradient_descent.png" alt="&quot;梯度下降法一个样本点&quot;"></p>
