@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="go 接口 表达式求值," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="这里总结一些go的接口使用方法，这是数学表达式求值的例子.存成 eval-test.go 运行 go test -v eval_test.go运行结果如下：123456789101112131415161718192021222324=== RUN   TestEvalsqrt(A / pi)        map[A:87616 pi:3.1415926535897pow(x, 3) + pow">
+<meta name="keywords" content="go 接口 表达式求值">
+<meta property="og:type" content="article">
+<meta property="og:title" content="go之接口-表达式求值">
+<meta property="og:url" content="http://yoursite.com/2018/11/30/go之接口-表达式求值/index.html">
+<meta property="og:site_name" content="sahajayogi2cn">
+<meta property="og:description" content="这里总结一些go的接口使用方法，这是数学表达式求值的例子.存成 eval-test.go 运行 go test -v eval_test.go运行结果如下：123456789101112131415161718192021222324=== RUN   TestEvalsqrt(A / pi)        map[A:87616 pi:3.1415926535897pow(x, 3) + pow">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-30T06:49:06.028Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="go之接口-表达式求值">
+<meta name="twitter:description" content="这里总结一些go的接口使用方法，这是数学表达式求值的例子.存成 eval-test.go 运行 go test -v eval_test.go运行结果如下：123456789101112131415161718192021222324=== RUN   TestEvalsqrt(A / pi)        map[A:87616 pi:3.1415926535897pow(x, 3) + pow">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/30/go之接口-表达式求值/"/>
+
+
+
+
+
+  <title>go之接口-表达式求值 | sahajayogi2cn</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">sahajayogi2cn</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">thoughtless awareness</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/30/go之接口-表达式求值/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="sahajayogi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="sahajayogi2cn">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">go之接口-表达式求值</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-30T14:27:50+08:00">
+                2018-11-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/go/" itemprop="url" rel="index">
+                    <span itemprop="name">go</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这里总结一些go的接口使用方法，这是数学表达式求值的例子.<br>存成 eval-test.go 运行 go test -v eval_test.go<br>运行结果如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">=== RUN   TestEval</span><br><span class="line"></span><br><span class="line">sqrt(A / pi)</span><br><span class="line">        map[A:87616 pi:3.1415926535897</span><br><span class="line"></span><br><span class="line">pow(x, 3) + pow(y, 3)</span><br><span class="line">        map[x:12 y:1] =&gt; 1729</span><br><span class="line">        map[x:9 y:10] =&gt; 1729</span><br><span class="line"></span><br><span class="line">5 / 9 * (F - 32)</span><br><span class="line">        map[F:-40] =&gt; -40</span><br><span class="line">        map[F:32] =&gt; 0</span><br><span class="line">        map[F:212] =&gt; 100</span><br><span class="line">--- PASS: TestEval (0.00s)</span><br><span class="line">=== RUN   TestErrors</span><br><span class="line">x % 2               unexpected &apos;%&apos;</span><br><span class="line">math.Pi             unexpected &apos;.&apos;</span><br><span class="line">!true               unexpected &apos;!&apos;</span><br><span class="line">&quot;hello&quot;             unexpected &apos;&quot;&apos;</span><br><span class="line">log(10)             unknown function &quot;</span><br><span class="line">sqrt(1, 2)          call to sqrt has 2</span><br><span class="line">--- PASS: TestErrors (0.00s)</span><br><span class="line">PASS</span><br><span class="line">ok      command-line-arguments  0.256s</span><br></pre></td></tr></table></figure></p>
+<p>(注：所有代码来自于<code>go圣经</code>这本书) </p>
+<pre><code class="golang"><span class="comment">// Package eval provides an expression evaluator.</span>
+<span class="keyword">package</span> eval
+
+<span class="keyword">import</span> (
+    <span class="string">"fmt"</span>
+    <span class="string">"math"</span>
+    <span class="string">"strconv"</span>
+    <span class="string">"strings"</span>
+    <span class="string">"text/scanner"</span>
+    <span class="string">"testing"</span>
+)
+
+<span class="comment">// An Expr is an arithmetic expression.</span>
+<span class="keyword">type</span> Expr <span class="keyword">interface</span> {
+    <span class="comment">// Eval returns the value of this Expr in the environment env.</span>
+    Eval(env Env) <span class="keyword">float64</span>
+    <span class="comment">// Check reports errors in this Expr and adds its Vars to the set.</span>
+    Check(vars <span class="keyword">map</span>[Var]<span class="keyword">bool</span>) error
+}
+
+<span class="comment">// A Var identifies a variable, e.g., x.</span>
+<span class="keyword">type</span> Var <span class="keyword">string</span>
+
+<span class="comment">// A literal is a numeric constant, e.g., 3.141.</span>
+<span class="keyword">type</span> literal <span class="keyword">float64</span>
+
+<span class="comment">// A unary represents a unary operator expression, e.g., -x.</span>
+<span class="keyword">type</span> unary <span class="keyword">struct</span> {
+    op <span class="keyword">rune</span> <span class="comment">// one of '+', '-'</span>
+    x  Expr
+}
+
+<span class="comment">// A binary represents a binary operator expression, e.g., x+y.</span>
+<span class="keyword">type</span> binary <span class="keyword">struct</span> {
+    op   <span class="keyword">rune</span> <span class="comment">// one of '+', '-', '*', '/'</span>
+    x, y Expr
+}
+
+<span class="comment">// A call represents a function call expression, e.g., sin(x).</span>
+<span class="keyword">type</span> call <span class="keyword">struct</span> {
+    fn   <span class="keyword">string</span> <span class="comment">// one of "pow", "sin", "sqrt"</span>
+    args []Expr
+}
+<span class="keyword">type</span> Env <span class="keyword">map</span>[Var]<span class="keyword">float64</span>
+<span class="function"><span class="keyword">func</span> <span class="params">(v Var)</span> <span class="title">Eval</span><span class="params">(env Env)</span> <span class="title">float64</span></span> {
+    <span class="keyword">return</span> env[v]
+}
+
+<span class="function"><span class="keyword">func</span> <span class="params">(l literal)</span> <span class="title">Eval</span><span class="params">(_ Env)</span> <span class="title">float64</span></span> {
+    <span class="keyword">return</span> <span class="keyword">float64</span>(l)
+}
+<span class="function"><span class="keyword">func</span> <span class="params">(u unary)</span> <span class="title">Eval</span><span class="params">(env Env)</span> <span class="title">float64</span></span> {
+    <span class="keyword">switch</span> u.op {
+    <span class="keyword">case</span> <span class="string">'+'</span>:
+        <span class="keyword">return</span> +u.x.Eval(env)
+    <span class="keyword">case</span> <span class="string">'-'</span>:
+        <span class="keyword">return</span> -u.x.Eval(env)
+    }
+    <span class="built_in">panic</span>(fmt.Sprintf(<span class="string">"unsupported unary operator: %q"</span>, u.op))
+}
+
+<span class="function"><span class="keyword">func</span> <span class="params">(b binary)</span> <span class="title">Eval</span><span class="params">(env Env)</span> <span class="title">float64</span></span> {
+    <span class="keyword">switch</span> b.op {
+    <span class="keyword">case</span> <span class="string">'+'</span>:
+        <span class="keyword">return</span> b.x.Eval(env) + b.y.Eval(env)
+    <span class="keyword">case</span> <span class="string">'-'</span>:
+        <span class="keyword">return</span> b.x.Eval(env) - b.y.Eval(env)
+    <span class="keyword">case</span> <span class="string">'*'</span>:
+        <span class="keyword">return</span> b.x.Eval(env) * b.y.Eval(env)
+    <span class="keyword">case</span> <span class="string">'/'</span>:
+        <span class="keyword">return</span> b.x.Eval(env) / b.y.Eval(env)
+    }
+    <span class="built_in">panic</span>(fmt.Sprintf(<span class="string">"unsupported binary operator: %q"</span>, b.op))
+}
+
+<span class="function"><span class="keyword">func</span> <span class="params">(c call)</span> <span class="title">Eval</span><span class="params">(env Env)</span> <span class="title">float64</span></span> {
+    <span class="keyword">switch</span> c.fn {
+    <span class="keyword">case</span> <span class="string">"pow"</span>:
+        <span class="keyword">return</span> math.Pow(c.args[<span class="number">0</span>].Eval(env), c.args[<span class="number">1</span>].Eval(env))
+    <span class="keyword">case</span> <span class="string">"sin"</span>:
+        <span class="keyword">return</span> math.Sin(c.args[<span class="number">0</span>].Eval(env))
+    <span class="keyword">case</span> <span class="string">"sqrt"</span>:
+        <span class="keyword">return</span> math.Sqrt(c.args[<span class="number">0</span>].Eval(env))
+    }
+    <span class="built_in">panic</span>(fmt.Sprintf(<span class="string">"unsupported function call: %s"</span>, c.fn))
+}
+
+<span class="function"><span class="keyword">func</span> <span class="title">TestEval</span><span class="params">(t *testing.T)</span></span> {
+    tests := []<span class="keyword">struct</span> {
+        expr <span class="keyword">string</span>
+        env  Env
+        want <span class="keyword">string</span>
+    }{
+        {<span class="string">"sqrt(A / pi)"</span>, Env{<span class="string">"A"</span>: <span class="number">87616</span>, <span class="string">"pi"</span>: math.Pi}, <span class="string">"167"</span>},
+        {<span class="string">"pow(x, 3) + pow(y, 3)"</span>, Env{<span class="string">"x"</span>: <span class="number">12</span>, <span class="string">"y"</span>: <span class="number">1</span>}, <span class="string">"1729"</span>},
+        {<span class="string">"pow(x, 3) + pow(y, 3)"</span>, Env{<span class="string">"x"</span>: <span class="number">9</span>, <span class="string">"y"</span>: <span class="number">10</span>}, <span class="string">"1729"</span>},
+        {<span class="string">"5 / 9 * (F - 32)"</span>, Env{<span class="string">"F"</span>: <span class="number">-40</span>}, <span class="string">"-40"</span>},
+        {<span class="string">"5 / 9 * (F - 32)"</span>, Env{<span class="string">"F"</span>: <span class="number">32</span>}, <span class="string">"0"</span>},
+        {<span class="string">"5 / 9 * (F - 32)"</span>, Env{<span class="string">"F"</span>: <span class="number">212</span>}, <span class="string">"100"</span>},
+    }
+    <span class="keyword">var</span> prevExpr <span class="keyword">string</span>
+    <span class="keyword">for</span> _, test := <span class="keyword">range</span> tests {
+        <span class="comment">// Print expr only when it changes.</span>
+        <span class="keyword">if</span> test.expr != prevExpr {
+            fmt.Printf(<span class="string">"\n%s\n"</span>, test.expr)
+            prevExpr = test.expr
+        }
+        expr, err := Parse(test.expr)
+        <span class="keyword">if</span> err != <span class="literal">nil</span> {
+            t.Error(err) <span class="comment">// parse error</span>
+            <span class="keyword">continue</span>
+        }
+        got := fmt.Sprintf(<span class="string">"%.6g"</span>, expr.Eval(test.env))
+        fmt.Printf(<span class="string">"\t%v =&gt; %s\n"</span>, test.env, got)
+        <span class="keyword">if</span> got != test.want {
+            t.Errorf(<span class="string">"%s.Eval() in %v = %q, want %q\n"</span>,
+            test.expr, test.env, got, test.want)
+        }
+    }
+}
+
+<span class="function"><span class="keyword">func</span> <span class="params">(v Var)</span> <span class="title">Check</span><span class="params">(vars <span class="keyword">map</span>[Var]<span class="keyword">bool</span>)</span> <span class="title">error</span></span> {
+    vars[v] = <span class="literal">true</span>
+    <span class="keyword">return</span> <span class="literal">nil</span>
+}
+
+<span class="function"><span class="keyword">func</span> <span class="params">(literal)</span> <span class="title">Check</span><span class="params">(vars <span class="keyword">map</span>[Var]<span class="keyword">bool</span>)</span> <span class="title">error</span></span> {
+    <span class="keyword">return</span> <span class="literal">nil</span>
+}
+
+<span class="function"><span class="keyword">func</span> <span class="params">(u unary)</span> <span class="title">Check</span><span class="params">(vars <span class="keyword">map</span>[Var]<span class="keyword">bool</span>)</span> <span class="title">error</span></span> {
+    <span class="keyword">if</span> !strings.ContainsRune(<span class="string">"+-"</span>, u.op) {
+        <span class="keyword">return</span> fmt.Errorf(<span class="string">"unexpected unary op %q"</span>, u.op)
+    }
+    <span class="keyword">return</span> u.x.Check(vars)
+}
+
+<span class="function"><span class="keyword">func</span> <span class="params">(b binary)</span> <span class="title">Check</span><span class="params">(vars <span class="keyword">map</span>[Var]<span class="keyword">bool</span>)</span> <span class="title">error</span></span> {
+    <span class="keyword">if</span> !strings.ContainsRune(<span class="string">"+-*/"</span>, b.op) {
+        <span class="keyword">return</span> fmt.Errorf(<span class="string">"unexpected binary op %q"</span>, b.op)
+    }
+    <span class="keyword">if</span> err := b.x.Check(vars); err != <span class="literal">nil</span> {
+        <span class="keyword">return</span> err
+    }
+    <span class="keyword">return</span> b.y.Check(vars)
+}
+
+<span class="function"><span class="keyword">func</span> <span class="params">(c call)</span> <span class="title">Check</span><span class="params">(vars <span class="keyword">map</span>[Var]<span class="keyword">bool</span>)</span> <span class="title">error</span></span> {
+    arity, ok := numParams[c.fn]
+    <span class="keyword">if</span> !ok {
+        <span class="keyword">return</span> fmt.Errorf(<span class="string">"unknown function %q"</span>, c.fn)
+    }
+    <span class="keyword">if</span> <span class="built_in">len</span>(c.args) != arity {
+        <span class="keyword">return</span> fmt.Errorf(<span class="string">"call to %s has %d args, want %d"</span>,
+            c.fn, <span class="built_in">len</span>(c.args), arity)
+    }
+    <span class="keyword">for</span> _, arg := <span class="keyword">range</span> c.args {
+        <span class="keyword">if</span> err := arg.Check(vars); err != <span class="literal">nil</span> {
+            <span class="keyword">return</span> err
+        }
+    }
+    <span class="keyword">return</span> <span class="literal">nil</span>
+}
+
+<span class="keyword">var</span> numParams = <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">int</span>{<span class="string">"pow"</span>: <span class="number">2</span>, <span class="string">"sin"</span>: <span class="number">1</span>, <span class="string">"sqrt"</span>: <span class="number">1</span>}
+
+<span class="function"><span class="keyword">func</span> <span class="title">TestErrors</span><span class="params">(t *testing.T)</span></span> {
+    <span class="keyword">for</span> _, test := <span class="keyword">range</span> []<span class="keyword">struct</span>{ expr, wantErr <span class="keyword">string</span> }{
+        {<span class="string">"x % 2"</span>, <span class="string">"unexpected '%'"</span>},
+        {<span class="string">"math.Pi"</span>, <span class="string">"unexpected '.'"</span>},
+        {<span class="string">"!true"</span>, <span class="string">"unexpected '!'"</span>},
+        {<span class="string">`"hello"`</span>, <span class="string">"unexpected '\"'"</span>},
+        {<span class="string">"log(10)"</span>, <span class="string">`unknown function "log"`</span>},
+        {<span class="string">"sqrt(1, 2)"</span>, <span class="string">"call to sqrt has 2 args, want 1"</span>},
+    } {
+        expr, err := Parse(test.expr)
+        <span class="keyword">if</span> err == <span class="literal">nil</span> {
+            vars := <span class="built_in">make</span>(<span class="keyword">map</span>[Var]<span class="keyword">bool</span>)
+            err = expr.Check(vars)
+            <span class="keyword">if</span> err == <span class="literal">nil</span> {
+                t.Errorf(<span class="string">"unexpected success: %s"</span>, test.expr)
+                <span class="keyword">continue</span>
+            }
+        }
+        fmt.Printf(<span class="string">"%-20s%v\n"</span>, test.expr, err) <span class="comment">// (for book)</span>
+        <span class="keyword">if</span> err.Error() != test.wantErr {
+            t.Errorf(<span class="string">"got error %s, want %s"</span>, err, test.wantErr)
+        }
+    }
+}
+
+<span class="comment">// ---- lexer ----</span>
+
+<span class="comment">// This lexer is similar to the one described in Chapter 13.</span>
+<span class="keyword">type</span> lexer <span class="keyword">struct</span> {
+    scan  scanner.Scanner
+    token <span class="keyword">rune</span> <span class="comment">// current lookahead token</span>
+}
+
+<span class="function"><span class="keyword">func</span> <span class="params">(lex *lexer)</span> <span class="title">next</span><span class="params">()</span></span>        { lex.token = lex.scan.Scan() }
+<span class="function"><span class="keyword">func</span> <span class="params">(lex *lexer)</span> <span class="title">text</span><span class="params">()</span> <span class="title">string</span></span> { <span class="keyword">return</span> lex.scan.TokenText() }
+
+<span class="keyword">type</span> lexPanic <span class="keyword">string</span>
+
+<span class="comment">// describe returns a string describing the current token, for use in errors.</span>
+<span class="function"><span class="keyword">func</span> <span class="params">(lex *lexer)</span> <span class="title">describe</span><span class="params">()</span> <span class="title">string</span></span> {
+    <span class="keyword">switch</span> lex.token {
+    <span class="keyword">case</span> scanner.EOF:
+        <span class="keyword">return</span> <span class="string">"end of file"</span>
+    <span class="keyword">case</span> scanner.Ident:
+        <span class="keyword">return</span> fmt.Sprintf(<span class="string">"identifier %s"</span>, lex.text())
+    <span class="keyword">case</span> scanner.Int, scanner.Float:
+        <span class="keyword">return</span> fmt.Sprintf(<span class="string">"number %s"</span>, lex.text())
+    }
+    <span class="keyword">return</span> fmt.Sprintf(<span class="string">"%q"</span>, <span class="keyword">rune</span>(lex.token)) <span class="comment">// any other rune</span>
+}
+
+<span class="function"><span class="keyword">func</span> <span class="title">precedence</span><span class="params">(op <span class="keyword">rune</span>)</span> <span class="title">int</span></span> {
+    <span class="keyword">switch</span> op {
+    <span class="keyword">case</span> <span class="string">'*'</span>, <span class="string">'/'</span>:
+        <span class="keyword">return</span> <span class="number">2</span>
+    <span class="keyword">case</span> <span class="string">'+'</span>, <span class="string">'-'</span>:
+        <span class="keyword">return</span> <span class="number">1</span>
+    }
+    <span class="keyword">return</span> <span class="number">0</span>
+}
+
+<span class="comment">// ---- parser ----</span>
+
+<span class="comment">// Parse parses the input string as an arithmetic expression.</span>
+<span class="comment">//</span>
+<span class="comment">//   expr = num                         a literal number, e.g., 3.14159</span>
+<span class="comment">//        | id                          a variable name, e.g., x</span>
+<span class="comment">//        | id '(' expr ',' ... ')'     a function call</span>
+<span class="comment">//        | '-' expr                    a unary operator (+-)</span>
+<span class="comment">//        | expr '+' expr               a binary operator (+-*/)</span>
+<span class="comment">//</span>
+<span class="function"><span class="keyword">func</span> <span class="title">Parse</span><span class="params">(input <span class="keyword">string</span>)</span> <span class="params">(_ Expr, err error)</span></span> {
+    <span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> {
+        <span class="keyword">switch</span> x := <span class="built_in">recover</span>().(<span class="keyword">type</span>) {
+        <span class="keyword">case</span> <span class="literal">nil</span>:
+            <span class="comment">// no panic</span>
+        <span class="keyword">case</span> lexPanic:
+            err = fmt.Errorf(<span class="string">"%s"</span>, x)
+        <span class="keyword">default</span>:
+            <span class="comment">// unexpected panic: resume state of panic.</span>
+            <span class="built_in">panic</span>(x)
+        }
+    }()
+    lex := <span class="built_in">new</span>(lexer)
+    lex.scan.Init(strings.NewReader(input))
+    lex.scan.Mode = scanner.ScanIdents | scanner.ScanInts | scanner.ScanFloats
+    lex.next() <span class="comment">// initial lookahead</span>
+    e := parseExpr(lex)
+    <span class="keyword">if</span> lex.token != scanner.EOF {
+        <span class="keyword">return</span> <span class="literal">nil</span>, fmt.Errorf(<span class="string">"unexpected %s"</span>, lex.describe())
+    }
+    <span class="keyword">return</span> e, <span class="literal">nil</span>
+}
+
+<span class="function"><span class="keyword">func</span> <span class="title">parseExpr</span><span class="params">(lex *lexer)</span> <span class="title">Expr</span></span> { <span class="keyword">return</span> parseBinary(lex, <span class="number">1</span>) }
+
+<span class="comment">// binary = unary ('+' binary)*</span>
+<span class="comment">// parseBinary stops when it encounters an</span>
+<span class="comment">// operator of lower precedence than prec1.</span>
+<span class="function"><span class="keyword">func</span> <span class="title">parseBinary</span><span class="params">(lex *lexer, prec1 <span class="keyword">int</span>)</span> <span class="title">Expr</span></span> {
+    lhs := parseUnary(lex)
+    <span class="keyword">for</span> prec := precedence(lex.token); prec &gt;= prec1; prec-- {
+        <span class="keyword">for</span> precedence(lex.token) == prec {
+            op := lex.token
+            lex.next() <span class="comment">// consume operator</span>
+            rhs := parseBinary(lex, prec+<span class="number">1</span>)
+            lhs = binary{op, lhs, rhs}
+        }
+    }
+    <span class="keyword">return</span> lhs
+}
+
+<span class="comment">// unary = '+' expr | primary</span>
+<span class="function"><span class="keyword">func</span> <span class="title">parseUnary</span><span class="params">(lex *lexer)</span> <span class="title">Expr</span></span> {
+    <span class="keyword">if</span> lex.token == <span class="string">'+'</span> || lex.token == <span class="string">'-'</span> {
+        op := lex.token
+        lex.next() <span class="comment">// consume '+' or '-'</span>
+        <span class="keyword">return</span> unary{op, parseUnary(lex)}
+    }
+    <span class="keyword">return</span> parsePrimary(lex)
+}
+
+<span class="comment">// primary = id</span>
+<span class="comment">//         | id '(' expr ',' ... ',' expr ')'</span>
+<span class="comment">//         | num</span>
+<span class="comment">//         | '(' expr ')'</span>
+<span class="function"><span class="keyword">func</span> <span class="title">parsePrimary</span><span class="params">(lex *lexer)</span> <span class="title">Expr</span></span> {
+    <span class="keyword">switch</span> lex.token {
+    <span class="keyword">case</span> scanner.Ident:
+        id := lex.text()
+        lex.next() <span class="comment">// consume Ident</span>
+        <span class="keyword">if</span> lex.token != <span class="string">'('</span> {
+            <span class="keyword">return</span> Var(id)
+        }
+        lex.next() <span class="comment">// consume '('</span>
+        <span class="keyword">var</span> args []Expr
+        <span class="keyword">if</span> lex.token != <span class="string">')'</span> {
+            <span class="keyword">for</span> {
+                args = <span class="built_in">append</span>(args, parseExpr(lex))
+                <span class="keyword">if</span> lex.token != <span class="string">','</span> {
+                    <span class="keyword">break</span>
+                }
+                lex.next() <span class="comment">// consume ','</span>
+            }
+            <span class="keyword">if</span> lex.token != <span class="string">')'</span> {
+                msg := fmt.Sprintf(<span class="string">"got %q, want ')'"</span>, lex.token)
+                <span class="built_in">panic</span>(lexPanic(msg))
+            }
+        }
+        lex.next() <span class="comment">// consume ')'</span>
+        <span class="keyword">return</span> call{id, args}
+
+    <span class="keyword">case</span> scanner.Int, scanner.Float:
+        f, err := strconv.ParseFloat(lex.text(), <span class="number">64</span>)
+        <span class="keyword">if</span> err != <span class="literal">nil</span> {
+            <span class="built_in">panic</span>(lexPanic(err.Error()))
+        }
+        lex.next() <span class="comment">// consume number</span>
+        <span class="keyword">return</span> literal(f)
+
+    <span class="keyword">case</span> <span class="string">'('</span>:
+        lex.next() <span class="comment">// consume '('</span>
+        e := parseExpr(lex)
+        <span class="keyword">if</span> lex.token != <span class="string">')'</span> {
+            msg := fmt.Sprintf(<span class="string">"got %s, want ')'"</span>, lex.describe())
+            <span class="built_in">panic</span>(lexPanic(msg))
+        }
+        lex.next() <span class="comment">// consume ')'</span>
+        <span class="keyword">return</span> e
+    }
+    msg := fmt.Sprintf(<span class="string">"unexpected %s"</span>, lex.describe())
+    <span class="built_in">panic</span>(lexPanic(msg))
+}
+</code></pre>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/go-接口-表达式求值/" rel="tag"># go 接口 表达式求值</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/29/go之接口-排序与http服务器/" rel="next" title="go之接口-排序与http服务器">
+                <i class="fa fa-chevron-left"></i> go之接口-排序与http服务器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.gif"
+                alt="sahajayogi" />
+            
+              <p class="site-author-name" itemprop="name">sahajayogi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">sahajayogi</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
